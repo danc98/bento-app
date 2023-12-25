@@ -1,0 +1,1 @@
+INSERT INTO products (item_name, plu_cd, item_price, item_desc, item_img, created_at, updated_at) VALUES ('Food Box', 3295423925, 950, 'Description!', 'food_box.png', strftime('%Y-%m-%d %H:%M:%S','now'), strftime('%Y-%m-%d %H:%M:%S','now'));
