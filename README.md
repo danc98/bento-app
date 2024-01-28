@@ -7,11 +7,6 @@ A label is printed for each product ready to be sold, which allows for the assum
 
 This application looks to a backend "labels" table to determine the stock of a product, and then subsequently updates the frontend product listing to allow a hypothetical user to know what products are
 avaiable at a given store (and whether or not they might need to rush to the store before their favorite bento box goes out of stock!).
- 
-Docker Pull Command
-```
-pull danc98/bento-app:latest
-```
 
 ## Framework
 
