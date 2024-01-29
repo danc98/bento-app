@@ -8,6 +8,23 @@ A label is printed for each product ready to be sold, which allows for the assum
 This application looks to a backend "labels" table to determine the stock of a product, and then subsequently updates the frontend product listing to allow a hypothetical user to know what products are
 avaiable at a given store (and whether or not they might need to rush to the store before their favorite bento box goes out of stock!).
 
+## Docker Container
+
+Built on a PHP 8.2.13/Alpine Linux base.  
+
+https://hub.docker.com/r/danc98/bento-app 
+
+Docker Pull Command
+```
+pull danc98/bento-app:latest
+```
+
+Docker Run Command
+```
+# Exposes to port 8000. Navigate to localhost:8000 to view.
+docker run --rm -t -p 8000:80 danc98/bento-app
+```
+
 ## Framework
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
