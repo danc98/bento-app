@@ -166,7 +166,6 @@ class ProductController extends Controller
         // soft deletion would be ideal, but so as not to clog up the database
         // with test data, hard deletion is implemented.
         $products = array_filter(explode(",", $request["selected_products"]));
-        dd($products);
         if (count($products) != 0) {
             Product::destroy($products);
         }

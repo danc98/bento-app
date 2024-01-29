@@ -105,7 +105,6 @@ class LabelController extends Controller
      */
     public function delete(Request $request): RedirectResponse {
         $labels = array_filter(explode(",", $request["selected_labels"]));
-        dd($labels);
         if (count($labels) != 0) {
             // Deletes all labels in array.
             Label::destroy($labels);

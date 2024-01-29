@@ -32,8 +32,6 @@ class CategoryController extends Controller
         $category = Category::firstOrNew(['category_name' => $category_name]);
 
         if (!$category->exists) {
-            // This can be handled automatically, but I messed up the auto insert
-            // when building the table, so this ensures the right date is inserted.
             $category->valid_datetime = date("Y-m-d H:i:s");
             $category->update_datetime = date("Y-m-d H:i:s");
 
