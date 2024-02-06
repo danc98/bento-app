@@ -40,4 +40,30 @@ class CategoryController extends Controller
 
         return $category->id;
     }
+
+    /**
+     * Recieves list of active categories and uses it find
+     * orphaned categories (categories without an existing product)
+     * and deletes them.
+     */
+    public function flushCategories($active_categories) {
+        // Pull all saved categories.
+        $categories = array();
+        foreach (Category::all() as $label) {
+            $categories[] = $label->id;
+        }
+
+        // Determine inactive categories, and delete.
+        $orphans = array_diff($categories, $active_categories);
+        foreach ($orphans as $orphan) {
+            $this->delete($orphan);
+        }
+    }
+
+    /**
+     * Deletes the specified category.
+     */
+    public function delete($category_id) {
+        Category::where('id', $category_id)->delete();
+    }
 }

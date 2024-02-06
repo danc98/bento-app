@@ -170,7 +170,27 @@ class ProductController extends Controller
             Product::destroy($products);
         }
 
+        // Checks if any categories are newly orphaned, and deletes them.
+        // Remove if you wish to preserve categories without products.
+        $this->flushCategories();
+
         return Redirect::route('admin.products');
+    }
+
+    /**
+     * Deletes orphaned products as a result of deleting a product.
+     */
+    private function flushCategories() {
+        // Pulls all category_ids attached to products.
+        $items = Product::distinct()->select('category_id')->get()->toArray();
+
+        // Converts into usable format for CategoryController.
+        $active_categories = array();
+        foreach ($items as $item) {
+            $active_categories[] = $item["category_id"];
+        }
+        
+        app(CategoryController::class)->flushCategories($active_categories);
     }
 
     /**
