@@ -83,7 +83,7 @@ Route::get('/admin/products/add', function () {
 // Route to store a product.
 Route::post('/admin/products/add', [ProductController::class, 'store'])->name('admin.store-product');
 
-// Route to patch a product.
+// Route to patch a product. *Not Implemented*
 Route::patch('/admin/products/patch', [ProductController::class, 'patch'])->name('admin.patch-product');
 
 // Route to delete a product.

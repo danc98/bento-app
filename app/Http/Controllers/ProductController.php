@@ -69,11 +69,7 @@ class ProductController extends Controller
             'category'     => $product->category(),
         ];
 
-        if ($listing['stock'] > 0) {
-            return $listing;
-        } else {
-            return NULL;
-        }
+        return $listing;
     }
 
     /**
@@ -118,6 +114,14 @@ class ProductController extends Controller
     }
 
     /**
+     * Stores an image.
+     */
+    public function storeImage($image) {
+        $path = $image->store('', 'public');
+        return $path;
+    }
+
+    /**
      * Adds a new product to the database.
      */
     public function store(Request $request): RedirectResponse {
@@ -132,13 +136,11 @@ class ProductController extends Controller
 
             $product = new Product;
             $category_id = app(CategoryController::class)->retrieveOrMake($product_info['category']);
+            $item_img = $product_info['item_img'];
 
-            // Only upload non-placeholder images.
-            if ($product_info['item_img'] != "placeholder.png") {
-                $item_img = date("YmdHis") . "_" . $product_info['item_img'];
-                $request->item_img->storeAs('public', $item_img);
-            } else {
-                $item_img = $product_info['item_img'];
+            // Only store non-placeholder images.
+            if ($item_img != "placeholder.png") {
+                $item_img = $this->storeImage($request->item_img);
             }
 
             $product->item_name   = $product_info['item_name'];
@@ -152,7 +154,7 @@ class ProductController extends Controller
 
             $product->save();
         } else {
-            return Redirect::route('admin.add-product')->with('errors', $result['errors']);
+            return Redirect::route('admin.add-product')->withErrors($result['errors']);
         }
 
         return Redirect::route('admin.products');
@@ -215,6 +217,11 @@ class ProductController extends Controller
         // Name
         $item_name = $this->cleanInput($request['item_name']);
 
+        // Could set a default name, but for now making name a requirement.
+        if ($item_name == "") {
+            $errors['item_name'] = "Please enter a name for the product.";
+        }
+
         // Shorten long item names rather than error them.
         if (mb_strlen($item_name) > 25) {
             $item_name = mb_substr($item_name, 0, 25);
@@ -245,8 +252,13 @@ class ProductController extends Controller
         // (Yes, this could be handled by the regex, but it's complex enough already.)
         $item_price = str_replace(",", "", $item_price);
 
+        // You must have a price, even if it's 0.
+        if ($item_price == "") {
+            $errors['item_price'] = "Please enter a price for the product.";
+        }
+
         // Both whole prices (10) and float values (10.99) are accepted.
-        if (!preg_match('/^\d+(\.\d{2})?$/', $item_price)) {
+        else if (!preg_match('/^\d+(\.\d{2})?$/', $item_price)) {
             $errors['item_price'] = "Please enter a valid price.";
         }
 
