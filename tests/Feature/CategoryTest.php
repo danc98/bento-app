@@ -29,11 +29,11 @@ class CategoryTest extends TestCase
             $this->assertArrayHasKey('name', $category, "name has not been set.");
             $this->assertNotEmpty($category['name'], "name is empty.");
 
-            $this->assertArrayHasKey('valid_datetime', $category, "valid_datetime has not been set.");
-            $this->assertNotEmpty($category['valid_datetime'], "valid_datetime is empty.");
+            $this->assertArrayHasKey('created_at', $category, "created_at has not been set.");
+            $this->assertNotEmpty($category['created_at'], "created_at is empty.");
 
-            $this->assertArrayHasKey('update_datetime', $category, "update_datetime has not been set.");
-            $this->assertNotEmpty($category['update_datetime'], "update_datetime is empty.");
+            $this->assertArrayHasKey('updated_at', $category, "updated_at has not been set.");
+            $this->assertNotEmpty($category['updated_at'], "updated_at is empty.");
         }
     }
 
@@ -45,8 +45,8 @@ class CategoryTest extends TestCase
         DB::table('categories')->insert([
             'id'              => '20',
             'category_name'   => 'Waldo',
-            'valid_datetime'  => '2023-12-01 12:00:00',
-            'update_datetime' => '2023-12-01 12:00:00',
+            'created_at'  => '2023-12-01 12:00:00',
+            'updated_at' => '2023-12-01 12:00:00',
         ]);
 
         $category_id = '20';
@@ -56,8 +56,8 @@ class CategoryTest extends TestCase
         $this->assertNotEmpty($pulled_category);
         $this->assertEquals("20",                  $pulled_category['category_id'],     "label_id not correct.");
         $this->assertEquals("Waldo",               $pulled_category['name'],            "name not correct.");
-        $this->assertEquals("2023-12-01 12:00:00", $pulled_category['valid_datetime'],  "valid_datetime not correct.");
-        $this->assertEquals("2023-12-01 12:00:00", $pulled_category['update_datetime'], "prod_datetime not correct.");
+        $this->assertEquals("2023-12-01 12:00:00", $pulled_category['created_at'],  "created_at not correct.");
+        $this->assertEquals("2023-12-01 12:00:00", $pulled_category['updated_at'], "prod_datetime not correct.");
     }
 
     /**
@@ -76,8 +76,8 @@ class CategoryTest extends TestCase
 
         // All other parameters are auto-set, so just check they are not empty.
         $this->assertNotEmpty($saved_category["category_id"]);
-        $this->assertNotEmpty($saved_category["valid_datetime"]);
-        $this->assertNotEmpty($saved_category["update_datetime"]);
+        $this->assertNotEmpty($saved_category["created_at"]);
+        $this->assertNotEmpty($saved_category["updated_at"]);
     }
 
     /**
@@ -89,8 +89,8 @@ class CategoryTest extends TestCase
         DB::table('categories')->insert([
             'id'              => '20',
             'category_name'   => 'Waldo',
-            'valid_datetime'  => '1995-12-01 12:00:00',
-            'update_datetime' => '1995-12-01 12:00:00',
+            'created_at'      => '1995-12-01 12:00:00',
+            'updated_at'      => '1995-12-01 12:00:00',
         ]);
 
         $search_category_name = "Waldo";
@@ -104,8 +104,8 @@ class CategoryTest extends TestCase
 
         // Since the two datetime items are newly set when a category is made, if they are
         // unchanged from above that means retrieveOrMake() didn't make a new category.
-        $this->assertEquals("1995-12-01 12:00:00", $found_category["valid_datetime"], "valid_datetime not correct.");
-        $this->assertEquals("1995-12-01 12:00:00", $found_category["update_datetime"], "update_datetime not correct.");
+        $this->assertEquals("1995-12-01 12:00:00", $found_category["created_at"], "created_at not correct.");
+        $this->assertEquals("1995-12-01 12:00:00", $found_category["updated_at"], "updated_at not correct.");
     }
 
     /**
@@ -117,8 +117,8 @@ class CategoryTest extends TestCase
         DB::table('categories')->insert([
             'id'              => '20',
             'category_name'   => 'DeleteMe!',
-            'valid_datetime'  => '1985-12-01 12:00:00',
-            'update_datetime' => '1985-12-01 12:00:00',
+            'created_at'      => '1985-12-01 12:00:00',
+            'updated_at'      => '1985-12-01 12:00:00',
         ]);
 
         // Ensure category exists in DB.

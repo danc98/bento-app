@@ -37,8 +37,8 @@ class CategoryController extends Controller
         $category = Category::firstOrNew(['category_name' => $category_name]);
 
         if (!$category->exists) {
-            $category->valid_datetime  = date("Y-m-d H:i:s");
-            $category->update_datetime = date("Y-m-d H:i:s");
+            $category->created_at = date("Y-m-d H:i:s");
+            $category->updated_at = date("Y-m-d H:i:s");
 
             $category->save();
         }
@@ -81,8 +81,8 @@ class CategoryController extends Controller
         $formatted_category = [
             'category_id'     => $category->id,
             'name'            => $category->category_name,
-            'valid_datetime'  => $category->valid_datetime,
-            'update_datetime' => $category->update_datetime,
+            'created_at'      => $category->created_at,
+            'updated_at'      => $category->updated_at,
         ];
         return $formatted_category;
     }

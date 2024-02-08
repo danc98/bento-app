@@ -14,32 +14,32 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             'category_name' => 'Fish',
-            'valid_datetime' => '2023-10-01 12:00:00',
-            'update_datetime' => '2023-10-01 12:00:00',
+            'created_at' => '2023-10-01 12:00:00',
+            'updated_at' => '2023-10-01 12:00:00',
         ]);
 
         DB::table('categories')->insert([
             'category_name' => 'Beef',
-            'valid_datetime' => '2023-10-01 12:00:00',
-            'update_datetime' => '2023-10-01 12:00:00',
+            'created_at' => '2023-10-01 12:00:00',
+            'updated_at' => '2023-10-01 12:00:00',
         ]);
 
         DB::table('categories')->insert([
             'category_name' => 'Pork',
-            'valid_datetime' => '2023-10-01 12:00:00',
-            'update_datetime' => '2023-10-01 12:00:00',
+            'created_at' => '2023-10-01 12:00:00',
+            'updated_at' => '2023-10-01 12:00:00',
         ]);
 
         DB::table('categories')->insert([
             'category_name' => 'Chicken',
-            'valid_datetime' => '2023-10-01 12:00:00',
-            'update_datetime' => '2023-10-01 12:00:00',
+            'created_at' => '2023-10-01 12:00:00',
+            'updated_at' => '2023-10-01 12:00:00',
         ]);
 
         DB::table('categories')->insert([
             'category_name' => 'Test',
-            'valid_datetime' => '2023-10-01 12:00:00',
-            'update_datetime' => '2023-10-01 12:00:00',
+            'created_at' => '2023-10-01 12:00:00',
+            'updated_at' => '2023-10-01 12:00:00',
         ]);
     }
 }
