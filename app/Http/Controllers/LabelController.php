@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Redirect;
 class LabelController extends Controller
 {      
     /**
-     * Display a listing of active labels.
+     * Return distinct product_ids associated with active labels.
      */
     public function active()
     {
-        // Get all active labels.
+        // Get all active product_ids associated with active labels.
         $active_labels = Label::distinct('product_id')->where('pack_status', '1')->get('product_id');
 
         $active_ids = [];
 
-        // Remove just the product ids.
+        // Pull out just the product_ids.
         foreach ($active_labels as $active_label) {
             $active_ids[] = $active_label["product_id"];
         }
@@ -36,30 +36,18 @@ class LabelController extends Controller
         $labels = array();
 
         foreach (Label::all() as $label) {
-            $pack_status = "";
-            switch ($label->pack_status) {
-                case "0":
-                    $pack_status = "0: printed";
-                    break;
-                case "1":
-                    $pack_status = "1: onSale";
-                    break;
-                case "2":
-                    $pack_status = "2: processed";
-                    break;
-            }
-
-            $labels[] = [
-                'label_id'        => $label->id,
-                'product'         => $label->product->item_name,
-                'prod_datetime'   => $label->prod_datetime,
-                'valid_datetime'  => $label->valid_datetime,
-                'update_datetime' => $label->update_datetime,
-                'pack_status'     => $pack_status,
-            ];
+            $labels[] = $this->formatLabel($label);
         }
 
         return $labels;
+    }
+
+    /**
+     * Retrieve a label using a given label_id.
+     */
+    public function retrieve(string $label_id) {
+        $label = Label::findOrFail($label_id);
+        return $this->formatLabel($label);
     }
 
     /**
@@ -83,7 +71,7 @@ class LabelController extends Controller
 
         //     $label->save();
         // } else {
-        //     return Redirect::route('admin.add-label')->with('errors', $result['errors']);
+        //     return Redirect::route('admin.add-label')->withErrors($result['errors']);
         // }
         $label = new Label;
 
@@ -114,15 +102,45 @@ class LabelController extends Controller
     }
 
     /**
-     * Deletes all labels associated with the given product_id.
+     * Converts pack_status to a more informative format.
      */
-    public function deleteAssociated($product_id) {
-        $deleted = Label::where('product_id', $product_id)->delete();
-        return $deleted;
+    private function convertPackStatus($pack_status) {
+        switch ($pack_status) {
+            case "0":
+                $pack_status = "0: printed";
+                break;
+            case "1":
+                $pack_status = "1: onSale";
+                break;
+            case "2":
+                $pack_status = "2: processed";
+                break;
+            default:
+                $pack_status = "unknown";
+        }
+        return $pack_status;
     }
 
     /**
-     * Private input validation function for adding a product to the database.
+     * Convert a label into an easier to use format.
+     */
+    private function formatLabel($label) {
+        $formatted_label = array();
+        $pack_status = $this->convertPackStatus($label->pack_status);
+
+        $formatted_label = [
+            'label_id'        => $label->id,
+            'product_id'      => $label->product_id,
+            'prod_datetime'   => $label->prod_datetime,
+            'valid_datetime'  => $label->valid_datetime,
+            'update_datetime' => $label->update_datetime,
+            'pack_status'     => $pack_status,
+        ];
+        return $formatted_label;
+    }
+
+    /**
+     * Private input validation function for adding a label to the database.
      */
     private function validateLabel(Request $request) {
         $label_info = array();

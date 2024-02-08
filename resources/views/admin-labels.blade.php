@@ -132,7 +132,7 @@
                     <p>{{ $labels[$i]['label_id'] }}</p>
                 </td>
                 <td>
-                    <p>{{ $labels[$i]['product'] }}</p>
+                    <p>{{ $labels[$i]['product_id'] }}</p>
                 </td>
                 <td>
                     <p>{{ $labels[$i]['prod_datetime'] }}</p>
