@@ -1,14 +1,39 @@
 ## Bento!
 
-A proof-of-concept web application meant to emulate a hypothetical "bento box" listing page for a Japanese supermarket, created to practice using Laravel 10.
+A proof-of-concept web application meant to emulate a hypothetical "bento box" listing page for an imaginary supermarket, created to practice using Laravel 10.
 
-The core idea is that each product placed out onto the store floor is associated with a label, which typically lists that product's information (name, price, ingredients, etc.) as well as its barcode.
-A label is printed for each product ready to be sold, which allows for the assumption that a printed label = an available product.
+It emulates a real-time display of a store's current stock of bento boxes, allowing a user to easily see a store's inventory without having to visit the store.
 
-This application looks to a backend "labels" table to determine the stock of a product, and then subsequently updates the frontend product listing to allow a hypothetical user to know what products are
-avaiable at a given store (and whether or not they might need to rush to the store before their favorite bento box goes out of stock!).
+Features an admin panel to view the back-end status and add/delete existing items.
 
-## Docker Container
+## Sample Images
+Main Page
+
+![Main Page](sample_images/MainPage.PNG)
+
+Product Listing
+
+![Product Listing](sample_images/ProductListing.PNG)
+
+Admin Panel
+
+![Admin Panel](sample_images/ProductAdmin.PNG)
+
+## Setup
+
+Run locally (Requires PHP and Composer) using the following command from the main directory:
+```
+php artisan serve
+```
+
+Or, create a Container using the Docker Image below.
+
+## Usage
+1. Click the "Update" button to see a listing of active products.
+2. Use the admin panel to add new products.
+3. Make sure to attach an active label (Pack Status = 1: onSale) to your products, or else they won't be displayed.
+
+## Docker Image
 
 Built on a PHP 8.2.13/Alpine Linux base.  
 
@@ -24,19 +49,6 @@ Docker Run Command
 docker run --rm -t -p 8000:80 danc98/bento-app
 ```
 Exposes to port 8000. Navigate to localhost:8000 to view.
-
-## Sample Images
-Main Page
-
-![Main Page](sample_images/MainPage.PNG)
-
-Product Listing
-
-![Product Listing](sample_images/ProductListing.PNG)
-
-Admin Panel
-
-![Admin Panel](sample_images/ProductAdmin.PNG)
 
 ## Framework
 
