@@ -126,11 +126,14 @@ class LabelController extends Controller
      */
     private function formatLabel($label) {
         $formatted_label = array();
+
+        // Convert product_id and pack_status into readable formats.
+        $attached_product_name = $label->product->item_name;
         $pack_status = $this->convertPackStatus($label->pack_status);
 
         $formatted_label = [
             'label_id'        => $label->id,
-            'product_id'      => $label->product_id,
+            'product'         => $attached_product_name,
             'prod_datetime'   => $label->prod_datetime,
             'valid_datetime'  => $label->valid_datetime,
             'update_datetime' => $label->update_datetime,

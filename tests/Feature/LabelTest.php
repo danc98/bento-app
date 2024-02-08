@@ -41,8 +41,8 @@ class LabelTest extends TestCase
             $this->assertArrayHasKey('label_id', $label, "label_id has not been set.");
             $this->assertNotEmpty($label['label_id'], "label_id is empty.");
 
-            $this->assertArrayHasKey('product_id', $label, "product_id has not been set.");
-            $this->assertNotEmpty($label['product_id'], "product_id is empty.");
+            $this->assertArrayHasKey('product', $label, "product has not been set.");
+            $this->assertNotEmpty($label['product'], "product is empty.");
 
             $this->assertArrayHasKey('prod_datetime', $label, "prod_datetime has not been set.");
             $this->assertNotEmpty($label['prod_datetime'], "prod_datetime is empty.");
@@ -83,7 +83,7 @@ class LabelTest extends TestCase
         // Label to find.
         DB::table('labels')->insert([
             'id'              => '20',
-            'product_id'      => '7',
+            'product_id'      => '7', // Corresponds to "Test Product".
             'prod_datetime'   => '2023-12-01 12:00:00',
             'valid_datetime'  => '2023-12-01 12:00:00',
             'update_datetime' => '2023-12-01 12:00:00',
@@ -96,7 +96,7 @@ class LabelTest extends TestCase
         // Checking parameters.
         $this->assertNotEmpty($pulled_label);
         $this->assertEquals("20",                  $pulled_label['label_id'],        "label_id not correct.");
-        $this->assertEquals("7",                   $pulled_label['product_id'],      "product_id not correct.");
+        $this->assertEquals("Test Product",        $pulled_label['product'],         "product not correct.");
         $this->assertEquals("2023-12-01 12:00:00", $pulled_label['prod_datetime'],   "prod_datetime not correct.");
         $this->assertEquals("2023-12-01 12:00:00", $pulled_label['valid_datetime'],  "valid_datetime not correct.");
         $this->assertEquals("2023-12-01 12:00:00", $pulled_label['update_datetime'], "update_datetime not correct.");
