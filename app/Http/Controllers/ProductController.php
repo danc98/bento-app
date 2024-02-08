@@ -33,18 +33,7 @@ class ProductController extends Controller
         $products = array();
 
         foreach (Product::all() as $product) {
-            $products[] = [
-                'product_id'   => $product->id,
-                'name'         => $product->item_name,
-                'plu_cd'       => $product->plu_cd,
-                'price'        => $product->item_price,
-                'desc'         => $product->item_desc,
-                'img'          => $product->item_img,
-                'ins_datetime' => $product->created_at,
-                'upd_datetime' => $product->updated_at,
-                'stock'        => $product->stock(),
-                'category'     => $product->category(),
-            ];
+            $products[] = $this->formatProduct($product);
         }
 
         return $products;
@@ -55,21 +44,7 @@ class ProductController extends Controller
      */
     public function retrieve(string $product_id) {
         $product = Product::findOrFail($product_id);
-
-        $listing = [
-            'product_id'   => $product->id,
-            'name'         => $product->item_name,
-            'plu_cd'       => $product->plu_cd,
-            'price'        => $product->item_price,
-            'desc'         => $product->item_desc,
-            'img'          => $product->item_img,
-            'ins_datetime' => $product->created_at,
-            'upd_datetime' => $product->updated_at,
-            'stock'        => $product->stock(),
-            'category'     => $product->category(),
-        ];
-
-        return $listing;
+        return $this->formatProduct($product);
     }
 
     /**
@@ -206,6 +181,26 @@ class ProductController extends Controller
         return $input;
     }
 
+    /**
+     * Convert a product into an easier to use format.
+     */
+    private function formatProduct($product) {
+        $formatted_product = array();
+        
+        $formatted_product = [
+            'product_id'   => $product->id,
+            'name'         => $product->item_name,
+            'plu_cd'       => $product->plu_cd,
+            'price'        => $product->item_price,
+            'desc'         => $product->item_desc,
+            'img'          => $product->item_img,
+            'ins_datetime' => $product->created_at,
+            'upd_datetime' => $product->updated_at,
+            'stock'        => $product->stock(),
+            'category'     => $product->category(),
+        ];
+        return $formatted_product;
+    }
     
     /**
      * Private input validation function for adding a product to the database.
