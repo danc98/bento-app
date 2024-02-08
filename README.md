@@ -21,9 +21,22 @@ pull danc98/bento-app:latest
 
 Docker Run Command
 ```
-# Exposes to port 8000. Navigate to localhost:8000 to view.
 docker run --rm -t -p 8000:80 danc98/bento-app
 ```
+Exposes to port 8000. Navigate to localhost:8000 to view.
+
+## Sample Images
+Main Page
+
+![Main Page](sample_images/MainPage.PNG)
+
+Product Listing
+
+![Product Listing](sample_images/ProductListing.PNG)
+
+Admin Panel
+
+![Admin Panel](sample_images/ProductAdmin.PNG)
 
 ## Framework
 
