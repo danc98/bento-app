@@ -12,15 +12,20 @@ class CategoryController extends Controller
      */
     public function retrieve(string $category_id) {
         $category = Category::findOrFail($category_id);
+        return $this->formatCategory($category);
+    }
 
-        $category_details = [
-            'category_id'     => $category->id,
-            'name'            => $category->category_name,
-            'valid_datetime'  => $category->valid_datetime,
-            'update_datetime' => $category->update_datetime,
-        ];
+    /**
+     * Return all categories.
+     */
+    public function index() {
+        $categories = array();
 
-        return $category_details;
+        foreach (Category::all() as $category) {
+            $categories[] = $this->formatCategory($category);
+        }
+
+        return $categories;
     }
 
     /**
@@ -32,7 +37,7 @@ class CategoryController extends Controller
         $category = Category::firstOrNew(['category_name' => $category_name]);
 
         if (!$category->exists) {
-            $category->valid_datetime = date("Y-m-d H:i:s");
+            $category->valid_datetime  = date("Y-m-d H:i:s");
             $category->update_datetime = date("Y-m-d H:i:s");
 
             $category->save();
@@ -49,8 +54,8 @@ class CategoryController extends Controller
     public function flushCategories($active_categories) {
         // Pull all saved categories.
         $categories = array();
-        foreach (Category::all() as $label) {
-            $categories[] = $label->id;
+        foreach (Category::all() as $category) {
+            $categories[] = $category->id;
         }
 
         // Determine inactive categories, and delete.
@@ -64,6 +69,21 @@ class CategoryController extends Controller
      * Deletes the specified category.
      */
     public function delete($category_id) {
-        Category::where('id', $category_id)->delete();
+        Category::destroy($category_id);
+    }
+
+    /**
+     * Convert a category into an easier to use format.
+     */
+    private function formatCategory($category) {
+        $formatted_category = array();
+
+        $formatted_category = [
+            'category_id'     => $category->id,
+            'name'            => $category->category_name,
+            'valid_datetime'  => $category->valid_datetime,
+            'update_datetime' => $category->update_datetime,
+        ];
+        return $formatted_category;
     }
 }
