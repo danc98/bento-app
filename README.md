@@ -41,7 +41,7 @@ https://hub.docker.com/r/danc98/bento-app
 
 Docker Pull Command
 ```
-pull danc98/bento-app:latest
+docker pull danc98/bento-app:latest
 ```
 
 Docker Run Command
